@@ -55,9 +55,9 @@ VIDEO_PATH = BASE_DIR / "heart_animation.mp4" # ➤ You can change the file name
 MUSIC_PATH = Path.home() / "Your/Music/Path/Here/File Name.m4a" # ➤ Put the music path here.
 
 
-# ➤ You can edit all colors with RGB, decimal or hexadecimal, or preset colors names listed in : COLOR_TEMPLATE (line 75).
+# ➤ You can edit all colors with RGB, decimal or hexadecimal, or preset colors names listed in : COLOR_TEMPLATE (line 76).
 BACKGROUND_COLOR = (0, 0, 0) # ➤ It's black 
-FPS = 60 # ➤ Frame generated per second, your computer might not be able to handle this, there will be a recap of the actual frame at the end.
+FPS = 60 # ➤ Frame generated per second, your computer might not be able to handle this, there will be a recap of the actual frame rate at the end.
 RUNNING_TIME = 35 # ➤ The time the animation is running (in seconds).
 
 CENTER_TEXT = " Your Text Here" # ➤ It's the final phrase displayed at the end.
