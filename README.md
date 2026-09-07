@@ -330,7 +330,7 @@ You can download or clone this project directly from GitHub.
 If Git is installed on your computer, open a terminal and run:
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/generate_heart_animation.git
+git clone https://github.com/ArthurN141/generate_heart_animation.git
 ```
 
 Then enter the project directory:
