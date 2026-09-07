@@ -1,3 +1,9 @@
+"""
+generate_heart_animation
+Copyright (c) 2026 Arthur Neuss
+MIT License
+"""
+
 # ➤ Native Python imports
 import math
 import random
