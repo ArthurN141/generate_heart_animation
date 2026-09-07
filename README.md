@@ -220,18 +220,6 @@ Range:
 0x000000 → 0xffffff
 ```
 
-Or using `#`:
-
-```python
-"#34ff43"
-```
-
-Range:
-
-```text
-#000000 → #ffffff
-```
-
 #### Color names
 
 You can also use a color name as a string:
