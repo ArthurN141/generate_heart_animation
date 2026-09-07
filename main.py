@@ -63,7 +63,8 @@ RUNNING_TIME = 35 # ➤ The time the animation is running (in seconds).
 CENTER_TEXT = " Your Text Here" # ➤ It's the final phrase displayed at the end.
 CENTER_COLOR_TEXT = (255, 250, 245) # ➤ It's 99% white here
 
-WORDS = ["first word here", "First Word Here", "FIRST WORD HERE"]
+WORDS = ["first word here", "First Word Here", "FIRST WORD HERE"] # ➤ You can add or remove strings
+# ➤ Colors your words will have
 WORDS_COLOR_1 = (70, 130, 180)
 WORDS_COLOR_2 = (30, 144, 255)
 WORDS_COLOR_3 = (0, 191, 255)
