@@ -336,7 +336,7 @@ def main():
         if music_file is None:
             print("\n❌ No audio file selected. Exiting.")
             return
-
+    # ➤ Shows the music path
     print(f"\nAudio file : {music_file}")
     
     pygame.init()
@@ -344,7 +344,7 @@ def main():
     screen = pygame.display.set_mode((0, 0), pygame.DOUBLEBUF)
     WIDTH, HEIGHT = screen.get_size()
     SCALE = min(WIDTH, HEIGHT) * 0.025
-    pygame.display.set_caption("Python emmerde aussi le rn !!")
+    pygame.display.set_caption("Heart Animation") # ➤ You can edit the name
     # ➤ VLC check
     player = None  
     if VLC_AVAILABLE:
