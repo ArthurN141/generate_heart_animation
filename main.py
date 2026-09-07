@@ -1,4 +1,4 @@
-# Native Python imports
+# ➤ Native Python imports
 import math
 import random
 import tkinter as tk
@@ -8,7 +8,7 @@ import platform
 import subprocess
 import os
 import time
-# Other imports
+# ➤ Other imports
 try:
     import vlc
     VLC_AVAILABLE = True
@@ -50,19 +50,20 @@ except ImportError:
 
 
 BASE_DIR = Path(__file__).resolve().parent
-FFMPEG_PATH = BASE_DIR / "ffmpeg"
-VIDEO_PATH = BASE_DIR / "heart_animation.mp4"
-MUSIC_PATH = Path.home() / "Music/iTunes/iTunes Media/Music/Diam's/Dans Ma Bulle/Marine.m4a"
+FFMPEG_PATH = BASE_DIR / "ffmpeg" # ➤ Needed to save the animation to .mp4
+VIDEO_PATH = BASE_DIR / "heart_animation.mp4" # ➤ You can change the file name but you have to leave .mp4 at the end !
+MUSIC_PATH = Path.home() / "Your/Music/Path/Here/File Name.m4a" # ➤ Put the music path here.
 
 
-BACKGROUND_COLOR = (0, 0, 0)
-FPS = 60
-RUNNING_TIME = 35
+# ➤ You can edit all colors with RGB, decimal or hexadecimal, or preset colors names listed in : COLOR_TEMPLATE (line 75).
+BACKGROUND_COLOR = (0, 0, 0) # ➤ It's black 
+FPS = 60 # ➤ Frame generated per second, your computer might not be able to handle this, there will be a recap of the actual frame at the end.
+RUNNING_TIME = 35 # ➤ The time the animation is running (in seconds).
 
-CENTER_TEXT = " La Jeunesse Emmerde le Front National !!"
-CENTER_COLOR_TEXT = (255, 250, 245)
+CENTER_TEXT = " Your Text Here" # ➤ It's the final phrase displayed at the end.
+CENTER_COLOR_TEXT = (255, 250, 245) # ➤ It's 99% white here
 
-WORDS = ["fuck le rn !", "Fuck Le Rn !", "FUCK LE RN !"]
+WORDS = ["first word here", "First Word Here", "FIRST WORD HERE"]
 WORDS_COLOR_1 = (70, 130, 180)
 WORDS_COLOR_2 = (30, 144, 255)
 WORDS_COLOR_3 = (0, 191, 255)
@@ -70,6 +71,7 @@ WORDS_COLOR_4 = (100, 149, 237)
 WORDS_COLOR_5 = (65, 105, 225)
 
 
+# ➤ Default colors name, you can put then in strings after a value, for example WORDS_COLOR_1 = "Green".
 COLOR_TEMPLATE = {
     "Red": 0xed4245,
     "Orange": 0xff8800,
@@ -99,7 +101,7 @@ COLOR_NAMES = {
 }
 
 def to_rgb(color, color_name="Color"):
-    # RGB tuple / list
+    # ➤ RGB tuple / list
     if isinstance(color, (tuple, list)):
         if (
             len(color) == 3
@@ -107,7 +109,7 @@ def to_rgb(color, color_name="Color"):
             and all(0 <= x <= 255 for x in color)
         ):
             return tuple(color)
-    # Decimal integer
+    # ➤ Decimal integer
     elif isinstance(color, int) and not isinstance(color, bool):
         if 0 <= color <= 0xFFFFFF:
             return (
@@ -115,6 +117,7 @@ def to_rgb(color, color_name="Color"):
                 (color >> 8) & 0xFF,
                 color & 0xFF
             )
+    # ➤ Colors names        
     elif isinstance(color, str):
         value = color.strip()
         # Color name
@@ -125,7 +128,7 @@ def to_rgb(color, color_name="Color"):
                 (decimal >> 8) & 0xFF,
                 decimal & 0xFF
             )
-        # Hexadecimal
+        # ➤ Hexadecimal
         hex_value = value.lower()
         if hex_value.startswith("0x"):
             hex_value = hex_value[2:]
@@ -154,6 +157,7 @@ def to_rgb(color, color_name="Color"):
     return None
 
 
+# ➤ Audio extensions supported
 AUDIO_EXTENSIONS = {
     ".mp3", ".wav", ".ogg", ".oga", ".flac", ".m4a", ".aac",
     ".wma", ".aiff", ".aif",
@@ -191,7 +195,7 @@ def choose_music_file():
 
 
 
-SIZE_MULT = [0.85, 0.90, 0.95, 1.00, 1.05, 1.10, 1.15]
+SIZE_MULT = [0.85, 0.90, 0.95, 1.00, 1.05, 1.10, 1.15] # ➤ It's not recommanded to change theses values.
 class Particle:
     __slots__ = (
         'x', 'y', 'order', 'kind', 'word', 'color',
@@ -298,7 +302,9 @@ def get_unique_video_path(base_path):
         counter += 1 
 
 
+# ➤ Main function to make it all run
 def main():
+    # ➤ Colors format verification
     background_color = to_rgb(
         BACKGROUND_COLOR,
         "BACKGROUND_COLOR"
@@ -320,7 +326,7 @@ def main():
         or any(color is None for color in colors_text)
     ):
         return
-    
+    # ➤ Music path verification
     music_file = MUSIC_PATH
     if music_file is None or not Path(music_file).is_file():
         print("\n⚠️ The configured music file could not be found.")
@@ -334,12 +340,12 @@ def main():
     print(f"\nAudio file : {music_file}")
     
     pygame.init()
-    
+    # ➤ window init
     screen = pygame.display.set_mode((0, 0), pygame.DOUBLEBUF)
     WIDTH, HEIGHT = screen.get_size()
     SCALE = min(WIDTH, HEIGHT) * 0.025
     pygame.display.set_caption("Python emmerde aussi le rn !!")
-    
+    # ➤ VLC check
     player = None  
     if VLC_AVAILABLE:
         try:
@@ -363,7 +369,7 @@ def main():
             print(f"\n❌ Pygame couldn't play this audio file: {e}")
             pygame.quit()
             return
-    
+    # ➤ Fonts
     font_outline = pygame.font.SysFont("arial", 20, bold=True)
     font_fill = pygame.font.SysFont("arial", 17, bold=True)
     font_center = pygame.font.SysFont("georgia", 54, bold=True)
@@ -424,7 +430,7 @@ def main():
             )
         )
         text_cache[key] = (txt, glow_big, glow_small)
-
+    # ➤ Checking if ffmpeg is a file and is executable
     ffmpeg_available = FFMPEG_PATH.is_file() and os.access(FFMPEG_PATH, os.X_OK)
     if not ffmpeg_available:
         print("\n⚠️ FFmpeg was not found.")
@@ -435,7 +441,7 @@ def main():
         print("    https://ffmpeg.org/download.html\n")
         print("• Place the FFmpeg executable in the same folder as this Python file.")
         print("• Make sure 'ffmpeg' is the executable itself, not a folder.")
-
+    # ➤ Recording
     ffmpeg = None
     if ffmpeg_available:
         video_path = get_unique_video_path(VIDEO_PATH)
@@ -464,7 +470,7 @@ def main():
     start_time = time.perf_counter()
     glow_layer = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
     text_layer = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
-    
+    # ➤ Loop
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
@@ -550,7 +556,7 @@ def main():
             running = False
 
     program_duration = time.perf_counter() - start_time
-    
+    # ➤ Closing of all module
     if ffmpeg_available:    
         ffmpeg.stdin.close()
         ffmpeg.wait()
@@ -561,12 +567,12 @@ def main():
         pygame.mixer.music.stop()
         
     pygame.quit()
-
+    # ➤ Final recap
     print("\n══════════════════════════════════════")
     print("           Program statistics")
     print("══════════════════════════════════════")
     print(f"Program duration : {program_duration:.2f} sec")
-    # Real FPS = frames generated / real execution time
+    # ➤ Real FPS = frames generated / real execution time
     real_fps = frame / program_duration if program_duration > 0 else 0
     print(f"Real FPS         : {real_fps:.2f} FPS")
     print(f"Target FPS       : {FPS} FPS")
@@ -599,6 +605,7 @@ def main():
     print("══════════════════════════════════════")
 
 
+# ➤ Run
 if __name__ == "__main__":
     try:
         main()
