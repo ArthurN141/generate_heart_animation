@@ -321,6 +321,34 @@ If VLC is missing or cannot be used, the program will automatically fall back to
 
 ---
 
+## Getting the project
+
+You can download or clone this project directly from GitHub.
+
+### Using Git
+
+If Git is installed on your computer, open a terminal and run:
+
+```bash
+git clone https://github.com/YOUR_USERNAME/generate_heart_animation.git
+```
+
+Then enter the project directory:
+
+```bash
+cd generate_heart_animation
+```
+
+### Without Git
+
+You can also download the project directly from GitHub by clicking:
+
+**Code → Download ZIP**
+
+Then extract the ZIP file wherever you want.
+
+---
+
 ## License
 
 *Copyright (c) 2026 Arthur Neuss
