@@ -1,29 +1,338 @@
 # generate_heart_animation
 
-Generating a heart with words, using pygame and ffmpeg (python).
-For all downloads, make sure you choose the corresponding extention OS (MacOs, Windows, Linux), for Apple there is a distinction of the CPU (Intel or Apple). If your Mac was bought before 2***, it mostly wont have Apple M1 cpu.
+Generate a heart-shaped animation made of words using **Python, Pygame and FFmpeg**.
 
-- Step 1 :
-  Download python at : https://www.python.org/downloads/
+## Requirements
 
+* Python 3
+* Pygame
+* FFmpeg *(optional, only required if you want to generate a video)*
+* VLC *(optional, recommended for additional audio format support)*
 
-- Step 2 :
-  Imports the none natives python modules. If you want to use any music file codec (like .m4v), it's recommanded to download the app VLC at : https://www.videolan.org/vlc/
-  Then, you have to open your terminal on MacOS or windows and enter theses commandes : (pour VlC et pygame pour chaque OS)
-  You have to download the compiled code of ffmpeg if you want to generate a videso as well : https://ffmpeg.org/download.html\
+> **Apple Silicon Macs:** if you have a Mac with an Apple M1, M2, M3, M4, etc. chip, you need the **Apple Silicon / ARM64** version of the corresponding software.
+>
+> The first Apple Silicon Mac was released in **November 2020**. If your Mac was purchased before 2020, it will most likely have an Intel processor.
+>
+> To check your Mac's processor, open **Apple menu → About This Mac**. It will indicate either an **Intel** processor or an **Apple M-series** chip.
 
+---
 
-- Step 3 :
- Once it's all done, create a new python file, copy the entire code from "main.py", save it, put the app ffmpeg at the same place (root) as the file.
- For the music, you need to determine the path, if you dont know it, you can drop the file on your terminal, it will show your the path, beware of escape symbole "\", you have to
- remove them (example : /your/file/path/this\ is\ the\ name.mp3 become : /your/file/path/this is the name.mp3). If the path is wrong of the file not existing, the code will
- automatically propose to choose a music file. If VLC is not installed or imported, the code will use the default module pygame.mixer from pygame.
+## Step 1 — Install Python
 
+Download and install Python from the official website:
 
-- Step 4 :
-  You can customize  and choose the words (WORDS and WORDS_COLOR_1, WORDS_COLOR_2...) and final center text (CENTER_TEXT) with colors (CENTER_COLOR_TEXT) as well as the
-  BACKGROUND_COLOR, it accepts for example : RGB (01, 02, 03) value 0 to 255, decimal 123456 range 0 to 16777215 and hexadecimal
-  0x34ff43 range 0x000000 to 0xffffff. You can write in string ("") name of colors like for example "Red", the list of the names are in COLOR_TEMPLATE.
-  Each time you generate a video, the default runninng time is 35 seconds, you can change it with RUNNING_TIME, if you escape or close the window before, it will automatically
-  stop the program. The video file generated is name "heart_animation.mp4", if there is already one existing, the program will create a new one named "heart_animation_2.mp4"
-  and then "heart_animation_3.mp4" etc. If there is any error or issue while running the code, you will mostly see it explained on the console.
+https://www.python.org/downloads/
+
+Make sure Python is available from your terminal.
+
+You can check it with:
+
+```bash
+python3 --version
+```
+
+On Windows, you can also try:
+
+```bash
+python --version
+```
+
+---
+
+## Step 2 — Install the Python modules
+
+Open your terminal (**Terminal** on macOS/Linux or **Command Prompt / PowerShell** on Windows) and run:
+
+```bash
+python3 -m pip install pygame python-vlc
+```
+
+On Windows, if `python3` is not recognized, use:
+
+```bash
+python -m pip install pygame python-vlc
+```
+
+### VLC
+
+VLC is **not required** to run the program, but it is recommended if you want to use audio formats that may not be supported reliably by `pygame.mixer` (for example, `.m4a`).
+
+Download VLC from:
+
+https://www.videolan.org/vlc/
+
+Install the version corresponding to your operating system and CPU architecture.
+
+If VLC is not installed, or if the Python `vlc` module cannot be used, the program will automatically fall back to `pygame.mixer`.
+
+---
+
+## Step 3 — Install FFmpeg
+
+FFmpeg is **optional**.
+
+You only need it if you want the program to generate an `.mp4` video.
+
+Download FFmpeg from:
+
+https://ffmpeg.org/download.html
+
+You must download a **pre-compiled FFmpeg binary** corresponding to your operating system and CPU architecture.
+
+For example, on a Mac:
+
+* **Intel Mac** → download the Intel / x86_64 version
+* **Apple Silicon Mac (M1/M2/M3/M4...)** → download the Apple Silicon / ARM64 version
+
+Once downloaded, place the FFmpeg executable in the **same directory as the Python file**.
+
+The program expects it to be named:
+
+```text
+ffmpeg
+```
+
+on macOS/Linux, or the appropriate executable name on Windows.
+
+If FFmpeg is not found, the animation will still run normally, but no video will be generated.
+
+---
+
+## Step 4 — Run the program
+
+Create a Python file and copy the complete code from `main.py` into it.
+
+Save the file in a folder of your choice.
+
+The FFmpeg executable must be placed in the **same folder** as the Python file.
+
+Your folder should look approximately like this:
+
+```text
+Your folder/
+├── main.py
+└── ffmpeg
+```
+
+### Music file
+
+You can configure the path to your music file directly in the Python code.
+
+If you do not know the path:
+
+1. Open your terminal.
+2. Drag and drop the music file into the terminal.
+3. The full path will appear automatically.
+
+On macOS, the terminal may add backslashes (`\`) before spaces or special characters.
+
+For example:
+
+```text
+/Users/Arthur/My\ Music/song.mp3
+```
+
+should be written in the Python configuration as:
+
+```text
+/Users/Arthur/My Music/song.mp3
+```
+
+If the configured path is invalid or the file does not exist, the program will automatically open a file picker and ask you to select a music file.
+
+---
+
+## Step 5 — Customize the animation
+
+You can customize the animation directly from the configuration section of the Python file.
+
+### Words
+
+You can change the words displayed around the heart with:
+
+```python
+WORDS
+```
+
+Each word can have its own color:
+
+```python
+WORDS_COLOR_1
+WORDS_COLOR_2
+WORDS_COLOR_3
+WORDS_COLOR_4
+WORDS_COLOR_5
+```
+
+### Center text
+
+The final text displayed in the center of the heart can be changed with:
+
+```python
+CENTER_TEXT
+```
+
+Its color can be changed with:
+
+```python
+CENTER_COLOR_TEXT
+```
+
+### Background
+
+The background color can be changed with:
+
+```python
+BACKGROUND_COLOR
+```
+
+### Supported color formats
+
+Colors can be specified using several different formats.
+
+#### RGB
+
+Values must be between `0` and `255`:
+
+```python
+(255, 0, 0)
+```
+
+#### Decimal
+
+The value must be between `0` and `16777215`:
+
+```python
+123456
+```
+
+#### Hexadecimal
+
+Using `0x`:
+
+```python
+0x34ff43
+```
+
+Range:
+
+```text
+0x000000 → 0xffffff
+```
+
+Or using `#`:
+
+```python
+"#34ff43"
+```
+
+Range:
+
+```text
+#000000 → #ffffff
+```
+
+#### Color names
+
+You can also use a color name as a string:
+
+```python
+"Red"
+```
+
+Color names are **case-insensitive**, so these are equivalent:
+
+```python
+"Red"
+"red"
+"RED"
+```
+
+The available color names are listed in:
+
+```python
+COLOR_TEMPLATE
+```
+
+---
+
+## Running time
+
+The default animation running time is **35 seconds**.
+
+You can change it with:
+
+```python
+RUNNING_TIME
+```
+
+You can also stop the program manually at any time by:
+
+* closing the window, or
+* pressing `Escape`.
+
+---
+
+## Generated video files
+
+When FFmpeg is available, the program automatically generates an MP4 video.
+
+The first video will be named:
+
+```text
+heart_animation.mp4
+```
+
+If a file with that name already exists, the program will **not overwrite it**.
+
+Instead, it will create:
+
+```text
+heart_animation_2.mp4
+```
+
+Then:
+
+```text
+heart_animation_3.mp4
+```
+
+and so on.
+
+This allows you to keep multiple versions of your animation.
+
+---
+
+## Program statistics
+
+When the program finishes, it displays statistics such as:
+
+```text
+Program duration : 33.24 sec
+Real FPS         : 46.60 FPS
+Target FPS       : 60 FPS
+Video duration   : 25.82 sec
+Time ratio       : 1.287
+```
+
+These values can be used to compare the actual performance of the computer with the target FPS.
+
+A **Time ratio closer to `1.000`** means that the program was able to stay closer to the configured target FPS.
+
+---
+
+## Troubleshooting
+
+If something goes wrong while running the program, check the terminal/console first.
+
+The program is designed to display warnings and errors there to help identify the problem.
+
+If FFmpeg is missing, the animation can still run without generating a video.
+
+If VLC is missing or cannot be used, the program will automatically fall back to `pygame.mixer`.
+
+---
+
+## License
+
+*to_edit*
